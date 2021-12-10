@@ -2,4 +2,14 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    width: 80%;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+#texto-tarefa {
+    margin-right: 10px;
 }
