@@ -2,6 +2,8 @@
 const input = document.querySelector('#texto-tarefa');
 const buttonCriarTarefa = document.querySelector('#criar-tarefa');
 const olListaTarefas = document.querySelector('#lista-tarefas');
+const buttonApagarTarefas = document.querySelector('#apaga-tudo');
+const buttonRemoverFinalizados = document.querySelector('#remover-finalizados');
 // Todas as funções do script.
 
 function adicionaTarefa() {
@@ -13,15 +15,13 @@ function adicionaTarefa() {
 
 function selecionaTarefa(event) {
   const eTarget = event.target;
-  console.log();
   if (document.querySelector('.selected') === null) {
-    eTarget.classList.add('selected');
-    eTarget.style.backgroundColor = 'rgb(128, 128, 128)';
+    eTarget.classList.toggle('selected');
+  } else if (eTarget === document.querySelector('.selected')) {
+    eTarget.classList.toggle('selected');
   } else {
-    document.querySelector('.selected').style.backgroundColor = 'rgb(255,255,255)';
     document.querySelector('.selected').classList.remove('selected');
-    eTarget.classList.add('selected');
-    eTarget.style.backgroundColor = 'rgb(128, 128, 128)';
+    eTarget.classList.toggle('selected');
   }
 }
 
@@ -30,7 +30,20 @@ function riscarTarefa(event) {
   eTarget.classList.toggle('completed');
 }
 
+function apagarLista() {
+  olListaTarefas.innerHTML = '';
+}
+
+function removerFinalizados() {
+  const tarefasFinalizados = document.querySelectorAll('.completed');
+  for (let index = 0; index < tarefasFinalizados.length; index += 1) {
+    olListaTarefas.removeChild(tarefasFinalizados[index]);
+  }
+}
+
 // Chama todas as funções
 buttonCriarTarefa.addEventListener('click', adicionaTarefa);
 olListaTarefas.addEventListener('click', selecionaTarefa);
 olListaTarefas.addEventListener('dblclick', riscarTarefa);
+buttonApagarTarefas.addEventListener('click', apagarLista);
+buttonRemoverFinalizados.addEventListener('click', removerFinalizados);
