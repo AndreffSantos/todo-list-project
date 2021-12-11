@@ -13,3 +13,11 @@ h1 {
 #texto-tarefa {
   margin-right: 10px;
 }
+
+li {
+  text-transform: capitalize;
+}
+
+.completed {
+  text-decoration: line-through, solid, black;
+}
