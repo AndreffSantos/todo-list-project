@@ -18,6 +18,10 @@ li {
   text-transform: capitalize;
 }
 
+.selected {
+  background-color: gray;
+}
+
 .completed {
-  text-decoration: line-through, solid, black;
+  text-decoration: line-through solid black;
 }

@@ -7,7 +7,6 @@ const olListaTarefas = document.querySelector('#lista-tarefas');
 function adicionaTarefa() {
   const newLi = document.createElement('li');
   newLi.innerText = input.value;
-  // newLi.style.textTransform = 'capitalize';
   olListaTarefas.appendChild(newLi);
   input.value = '';
 }
@@ -28,7 +27,7 @@ function selecionaTarefa(event) {
 
 function riscarTarefa(event) {
   const eTarget = event.target;
-  eTarget.classList.add('completed', 'completed::marker');
+  eTarget.classList.toggle('completed');
 }
 
 // Chama todas as funções
