@@ -5,6 +5,8 @@ const olListaTarefas = document.querySelector('#lista-tarefas');
 const buttonApagarTarefas = document.querySelector('#apaga-tudo');
 const buttonRemoverFinalizados = document.querySelector('#remover-finalizados');
 const buttonSalvarTarefas = document.querySelector('#salvar-tarefas');
+const buttonMoverCima = document.querySelector('#mover-cima');
+const buttonMoverBaixo = document.querySelector('#mover-baixo');
 const string1 = 'CONTENT-';
 const string2 = 'CLASS-';
 // Todas as funções do script.
@@ -18,19 +20,22 @@ function adicionaTarefa() {
 
 function selecionaTarefa(event) {
   const eTarget = event.target;
-  if (document.querySelector('.selected') === null) {
-    eTarget.classList.toggle('selected');
-  } else if (eTarget === document.querySelector('.selected')) {
-    eTarget.classList.toggle('selected');
-  } else {
-    document.querySelector('.selected').classList.remove('selected');
-    eTarget.classList.toggle('selected');
+  if (eTarget.id !== 'lista-tarefas') {
+    if (document.querySelector('.selected') === null) {
+      eTarget.classList.toggle('selected');
+    } else {
+      document.querySelector('.selected').classList.remove('selected');
+      eTarget.classList.add('selected');
+    }
   }
 }
 
 function riscarTarefa(event) {
   const eTarget = event.target;
-  eTarget.classList.toggle('completed');
+  console.log(eTarget.id);
+  if (eTarget.id !== 'lista-tarefas') {
+    eTarget.classList.toggle('completed');
+  }
 }
 
 function apagarLista() {
@@ -64,6 +69,51 @@ function salvarLista() {
   }
 }
 
+function teclaParaCima(e) {
+  const selected = document.querySelector('.selected');
+  if (e.id === 'mover-cima' && selected !== null && selected.previousElementSibling !== null) {
+    return true;
+  }
+  return false;
+}
+
+function teclaParaBaixo(e) {
+  const selected = document.querySelector('.selected');
+  if (e.id === 'mover-baixo' && selected !== null && selected.nextElementSibling !== null) {
+    return true;
+  }
+  return false;
+}
+
+function moveParaCima() {
+  const selected = document.querySelector('.selected');
+  const aux = selected.previousElementSibling.textContent;
+  const auxClass = selected.previousElementSibling.className;
+  selected.previousElementSibling.textContent = selected.textContent;
+  selected.previousElementSibling.className = selected.className;
+  selected.textContent = aux;
+  selected.className = auxClass;
+}
+
+function moveParaBaixo() {
+  const selected = document.querySelector('.selected');
+  const aux = selected.nextElementSibling.textContent;
+  const auxClass = selected.nextElementSibling.className;
+  selected.nextElementSibling.textContent = selected.textContent;
+  selected.nextElementSibling.className = selected.className;
+  selected.textContent = aux;
+  selected.className = auxClass;
+}
+
+function moverTarefa(event) {
+  const eTarget = event.target;
+  if (teclaParaCima(eTarget)) {
+    moveParaCima();
+  } else if (teclaParaBaixo(eTarget)) {
+    moveParaBaixo();
+  }
+}
+
 // Chama todas as funções
 buttonCriarTarefa.addEventListener('click', adicionaTarefa);
 olListaTarefas.addEventListener('click', selecionaTarefa);
@@ -71,6 +121,8 @@ olListaTarefas.addEventListener('dblclick', riscarTarefa);
 buttonApagarTarefas.addEventListener('click', apagarLista);
 buttonRemoverFinalizados.addEventListener('click', removerFinalizados);
 buttonSalvarTarefas.addEventListener('click', salvarLista);
+buttonMoverCima.addEventListener('click', moverTarefa);
+buttonMoverBaixo.addEventListener('click', moverTarefa);
 
 const tam = localStorage.length;
 if (tam > 0) {
@@ -82,6 +134,6 @@ if (tam > 0) {
     if (localStorage[valor2] !== '') {
       newLi.className = localStorage[valor2];
     }
-    olListaTarefas.appendChild(newLi);    
+    olListaTarefas.appendChild(newLi);
   }
 }
