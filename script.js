@@ -7,10 +7,11 @@ const buttonRemoverFinalizados = document.querySelector('#remover-finalizados');
 const buttonSalvarTarefas = document.querySelector('#salvar-tarefas');
 const buttonMoverCima = document.querySelector('#mover-cima');
 const buttonMoverBaixo = document.querySelector('#mover-baixo');
+const buttonRemoverSelecionado = document.querySelector('#remover-selecionado');
 const string1 = 'CONTENT-';
 const string2 = 'CLASS-';
-// Todas as funções do script.
 
+// Todas as funções do script.
 function adicionaTarefa() {
   const newLi = document.createElement('li');
   newLi.innerText = input.value;
@@ -114,6 +115,12 @@ function moverTarefa(event) {
   }
 }
 
+function removerSelecionado() {
+  if (document.querySelector('.selected') !== null) {
+    olListaTarefas.removeChild(document.querySelector('.selected'));
+  }
+}
+
 // Chama todas as funções
 buttonCriarTarefa.addEventListener('click', adicionaTarefa);
 olListaTarefas.addEventListener('click', selecionaTarefa);
@@ -123,6 +130,7 @@ buttonRemoverFinalizados.addEventListener('click', removerFinalizados);
 buttonSalvarTarefas.addEventListener('click', salvarLista);
 buttonMoverCima.addEventListener('click', moverTarefa);
 buttonMoverBaixo.addEventListener('click', moverTarefa);
+buttonRemoverSelecionado.addEventListener('click', removerSelecionado);
 
 const tam = localStorage.length;
 if (tam > 0) {
