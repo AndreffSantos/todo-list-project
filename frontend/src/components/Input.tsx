@@ -1,14 +1,16 @@
 interface InputType {
-  type: string,
+  type?: string,
   id: string,
-  name: string
+  name: string,
+  placeholder: string
 }
 
 export default function Input(
   {
     type='text',
     id,
-    name=''
+    name='',
+    placeholder,
   }: InputType
 ) {
   return (
@@ -16,6 +18,7 @@ export default function Input(
       type={type}
       id={id}
       name={name}
+      placeholder={placeholder}
     />
   )
 }
