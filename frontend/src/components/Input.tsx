@@ -1,8 +1,11 @@
+import {  ChangeEventHandler } from "react"
+
 interface InputType {
   type?: string,
   id: string,
   name: string,
   placeholder: string
+  onChange: ChangeEventHandler
 }
 
 export default function Input(
@@ -11,6 +14,7 @@ export default function Input(
     id,
     name='',
     placeholder,
+    onChange
   }: InputType
 ) {
   return (
@@ -19,6 +23,7 @@ export default function Input(
       id={id}
       name={name}
       placeholder={placeholder}
+      onChange={onChange}
     />
   )
 }

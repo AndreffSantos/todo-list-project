@@ -3,8 +3,10 @@ import Title from '../components/Title'
 import Image from '../components/Image'
 import Button from '../components/Button'
 import Text from '../components/Text'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
+  const navigate = useNavigate()
   return (
     <section>
       <div className="container">
@@ -18,7 +20,7 @@ export default function Home() {
             asperiores saepe eum optio!'
           }
         />
-        <Button>
+        <Button onClick={() => navigate('/Login')}>
           Get Started
         </Button>
 
