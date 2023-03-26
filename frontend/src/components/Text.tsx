@@ -4,6 +4,8 @@ interface TextInterface {
 
 export default function Text({ text }: TextInterface) {
   return (
-    <p>{text}</p>
+    <p>
+      {text}
+    </p>
   )
 }
