@@ -13,8 +13,8 @@ section {
 }
 
 .container {
-  background-color: whitesmoke;
-  border-radius: 1rem;
+  background-color: #EDEDED;
+  border-radius: 3%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,11 +45,36 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+button:disabled {
+  background-color: grey;
+}
+
+.add_button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 form {
   align-items: center;
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.checkbox_container {
+  border-radius: 3%;
+  display: flex;
+  flex-direction: column;
+  background-color: #55847A;
+  padding: 5% 10%;
+  margin-bottom: 15px;
+}
+
+.input_checkbox {
+  padding: 500px;
+  margin: 0 10px;
+  width: fit-content;
 }
 
 input {
@@ -59,3 +84,4 @@ input {
   border: 1px gray solid;
   border-radius: 20px;
 }
+
