@@ -1,9 +1,11 @@
-from flask import Flask, request, json
+from flask import Flask, json, request
+from flask_cors import CORS
 from validators.validator import valid_email, valid_password
-from db.DB import get_user
-from helpers.JWT import token
+from db.DB import get_user, get_tasks_by_user, insert_user, insert_task
+from helpers.JWT import encode, decode
 
 app = Flask(__name__)
+CORS(app)
 
 @app.post("/login")
 def login():
@@ -16,16 +18,49 @@ def login():
     user_data = get_user(user['email'], user['password'])
 
     payload = {
-        'user_id': user_data[0],
-        'name': user_data[1],
-        'email': user_data[2],
+        'user_id': user_data['user_id'],
+        'name': user_data['name'],
+        'email': user_data['email'],
     }
 
     data = {
-        'token': token(payload)
+        'token': encode(payload)
     }
 
     return app.response_class(
         response=json.dumps(data),
         status=200,
     )
+
+@app.post('/user')
+def new_user():
+    new_user = request.json
+    valid_email(new_user['email'])
+    valid_password(new_user['password'])
+
+    insert_user(new_user['name'], new_user['email'], new_user['password'])
+
+    return app.response_class(
+        json.dumps({
+            'message': 'Novo usuario cadastrado'
+        }),
+        201
+    )
+
+@app.route('/tasks', methods = ['GET', 'POST'])
+def tasks():
+    if request.method == 'GET':
+        id = decode(request.headers['Authorization'])['user_id']
+        tasks = [task['description'] for task in get_tasks_by_user(id)]
+        return tasks
+    if request.method == 'POST':
+        id = decode(request.headers['Authorization'])['user_id']
+        description = request.json['description']
+
+        insert_task(id, description)
+        return app.response_class(
+            json.dumps({
+                'message': 'Tarefa cadastrada'
+            }),
+            201
+        )
